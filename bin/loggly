@@ -1,0 +1,24 @@
+#!/usr/bin/env ruby
+
+require 'bundler/setup'
+require 'pry'
+require 'trollop'
+
+require File.expand_path('../../lib/loggly', __FILE__)
+
+opts = Trollop::options do
+  opt :uri, "Loggly URI", :type => :string
+  opt :username, "Loggly Client Username", :type => :string
+  opt :password, "Loggly Client Password", :type => :string
+end
+
+Loggly.connect(opts)
+
+@events = begin
+  Loggly::Event.all(:q => '*', :from => -2, :until => 'now')
+rescue Exception => e
+  Loggly.logger.debug e.message
+  Loggly.logger.debug e.backtrace.join("\n")
+end
+
+pry.binding
