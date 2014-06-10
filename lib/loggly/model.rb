@@ -2,10 +2,13 @@ module Loggly
   class Model
     include Logging
 
-    attr_accessor :attributes
+    METADATA_KEYS = {}
+
+    attr_accessor :attributes, :response
 
     def initialize(attributes = {})
       @attributes = OpenStruct.new(attributes)
+      @response = nil
     end
 
     def to_hash

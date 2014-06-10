@@ -15,7 +15,7 @@ end
 Loggly.connect(opts)
 
 @events = begin
-  Loggly::Event.all(:q => '*', :from => -2, :until => 'now')
+  Loggly::Event.all(:q => '*', :from => '-2h', :until => 'now')
 rescue Exception => e
   Loggly.logger.debug e.message
   Loggly.logger.debug e.backtrace.join("\n")

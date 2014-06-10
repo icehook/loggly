@@ -1,11 +1,15 @@
 module Loggly
   class Event < RemoteModel
 
+    METADATA_KEYS = {
+                      :total_count => :total_events,
+                      :current_page => :page,
+                    }
+
     set_resource_attributes({
                               :path_base => 'apiv2/',
                               :collection_name => 'events',
                               :index_method => 'events',
-                              :size => 50,
                               :path_ext => '',
                               :request_options => {
                               }
@@ -16,9 +20,16 @@ module Loggly
     end
 
     def self.all(conditions = {}, options = {}, &callback)
-      search = Search.create!(conditions, options)
+      conditions[:order] ||= "desc"
+      conditions[:from] ||= "-24h"
+      conditions[:until] ||= "now"
 
-      super({:rsid => search.attributes.id}, options, &callback)
+      unless rsid = options[:rsid]
+        search = Search.create!(conditions, options)
+        rsid = search.attributes.id
+      end
+
+      super({:rsid => rsid}, options, &callback)
     end
 
   end

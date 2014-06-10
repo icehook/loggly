@@ -16,7 +16,9 @@ module Loggly
 
     def self.create!(conditions = {}, options = {}, &callback)
       options.merge!(:klass => self)
-      params = conditions
+      params = prepare_params(conditions)
+      params[:size] = (options[:per_page] ||= @resource_attributes[:per_page])
+      params[:page] = (options[:page] ||= 0)
 
       response = Request.new(@resource_attributes, :get, [path_base, index_method], path_ext, params, options).execute(Loggly.connection)
 

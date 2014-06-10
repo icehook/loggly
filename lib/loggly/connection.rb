@@ -14,8 +14,6 @@ module Loggly
       @faraday = Faraday.new uri do |c|
         c.headers['User-Agent'] = USER_AGENT
 
-        Loggly.logger.info "username: #{username} password: #{password}"
-
         c.request :basic_auth, username, password unless (username.blank? || password.blank?)
         c.request :multipart
         c.request :url_encoded

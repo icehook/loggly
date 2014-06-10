@@ -3,10 +3,10 @@ module Loggly
 
     DEFAULT_RESOURCE_ATTRIBUTES = {
       :path_base => nil,
-      :path_ext => '.json',
+      :path_ext => nil,
       :index_method => nil,
       :collection_name => '',
-      :size => 25,
+      :per_page => 25,
       :request_options => {}
     }
 
@@ -30,10 +30,10 @@ module Loggly
       end
 
       def all(conditions = {}, options = {}, &callback)
-        options.merge!(:klass => self)
+        options = options.merge(:klass => self)
         params = conditions
-        params[:size] ||= @resource_attributes[:size]
-        params[:page] ||= 1
+        params[:size] = (options[:per_page] ||= @resource_attributes[:per_page])
+        params[:page] = (options[:page] ||= 0)
 
         response = Request.new(@resource_attributes, :get, [path_base, index_method], path_ext, params, options).execute(Loggly.connection)
         models = response.to_models
@@ -43,12 +43,24 @@ module Loggly
         models
       end
 
+      def prepare_params(conditions = {}, options = {})
+        params = {}
+
+        params[:q] = if conditions[:q].kind_of?(Hash)
+          conditions[:q].map { |condition| condition.join(':') }.join(' AND ')
+        else
+          '*'
+        end
+
+        params
+      end
+
       def where(conditions = {}, options = {}, &callback)
         self.all(conditions, options, &callback)
       end
 
       def find(id, options = {}, &callback)
-        options.merge!(:klass => self)
+        options.merge(:klass => self)
 
         response = Request.new(@resource_attributes, :get, [path_base, id.to_s], path_ext, {}, options).execute(Loggly.connection)
         model = response.to_model
