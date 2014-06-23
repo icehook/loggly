@@ -6,11 +6,11 @@ require 'loggly/version'
 Gem::Specification.new do |spec|
   spec.name          = "loggly"
   spec.version       = Loggly::VERSION
-  spec.authors       = ["Keith Larrimore", "Brendon Harris"]
+  spec.authors       = ["Keith Larrimore", "Brendan Harris"]
   spec.email         = ["klarrimore@icehook.com", "bharris@icehook.com"]
   spec.summary       = %q{Loggly Ruby Client Library}
   spec.description   = %q{Loggly Ruby Client Library}
-  spec.homepage      = ""
+  spec.homepage      = "https://github.com/icehook/loggly"
   spec.license       = "MIT"
 
   spec.files         = `git ls-files -z`.split("\x0")
