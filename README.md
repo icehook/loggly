@@ -79,11 +79,11 @@ Each Event has a **Response** and **attributes** that match the Loggly fields.
       :events=>
       [{:tags=>["chipper", "frontend"],
         :timestamp => 1377431712208,
-        :logmsg => {\timestamp\: \13-08-25 11:55:12,208191\, \baremsg\: \Alert is due to run\},
+        :logmsg => "{\timestamp\: \13-08-25 11:55:12,208191\, \baremsg\: \Alert is due to run\}"",
           :event=>
           {:syslog=>
             {:priority=>142,
-             :timestamp=>2013-08-25T11:55:12.208596+00:00,
+             :timestamp=>"2013-08-25T11:55:12.208596+00:00",
              :host=>"frontend01",
              :severity=>"Informational",
              :facility=>"local use 1"
@@ -119,8 +119,9 @@ Try the following to get an array of all the event attributes:
 1. Sending Data
 2. Retrieve Account Information
 3. Field Search
-4. `OR` and `NOT` search functionality
+4. `OR`, `NOT` and `TO` search functionality
 5. Filter Search by field
+6. Command Line Tools
 
 
 ## Contributing
