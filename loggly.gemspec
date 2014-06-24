@@ -4,9 +4,9 @@ $LOAD_PATH.unshift(lib) unless $LOAD_PATH.include?(lib)
 require 'loggly/version'
 
 Gem::Specification.new do |spec|
-  spec.name          = "loggly"
+  spec.name          = "loggly-rb"
   spec.version       = Loggly::VERSION
-  spec.authors       = ["Keith Larrimore", "Brendan Harris"]
+  spec.authors       = ["Keith Larrimore", "Brendon Harris"]
   spec.email         = ["klarrimore@icehook.com", "bharris@icehook.com"]
   spec.summary       = %q{Loggly Ruby Client Library}
   spec.description   = %q{Loggly Ruby Client Library}
